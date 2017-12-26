@@ -15,27 +15,35 @@ class App extends Component {
             videos: [], 
             selectedVideo: null
         };
+        this.videoSearch('surfboards');
+    }
 
-        YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
+
+    videoSearch(term) {
+        YTSearch({key: API_KEY, term: term}, (videos) => {
             this.setState({ 
                 videos: videos,
                 selectedVideo: videos[0]
-            }); //this.setState({videos: videos}) when key and values are the same
-        })
-    }
+                });
+                }
+            )
+        }
+
     render() { //this function will not wait for server response
     return (
         <div>
-            <SearchBar />
-            <VideoDetail video={this.state.selectedVideo}/>
+            <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+            <VideoDetail video={this.state.selectedVideo} />
             <VideoList 
-                onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
                 videos={this.state.videos} />  
-            {/* passing data (aka props) from parent element APP to child element Videolist */}
+            
         </div>
         );
     };
+
 }
+
 
 
 
